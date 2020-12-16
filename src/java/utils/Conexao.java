@@ -9,7 +9,7 @@ public class Conexao {
     
     public static Connection conectar(){
         Connection con = null;
-        String url = "jdbc:postgresql://localhost:5432/financeiro";
+        String url = "jdbc:postgresql://localhost:5432/planilhafinanceira";
         String user = "postgres";
         String password = "123";
         try {

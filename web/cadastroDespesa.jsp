@@ -15,6 +15,10 @@
         <h1>Cadastro de Despesa</h1>
          <div>
             <form action="recebeDadosDespesa.jsp" method="POST">
+            <label>Informe a categoria</label>
+            <input type="text" name="categoria" /> 
+            
+            <br />
             <label>Informe a descrição</label>
             <input type="text" name="descricao" /> 
             
