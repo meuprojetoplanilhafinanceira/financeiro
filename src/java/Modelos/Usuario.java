@@ -23,6 +23,20 @@ public class Usuario {
     private String email;
     private String senha;
     
+    public boolean userExiste(String pUser){
+      Connection con = Conexao.conectar();
+      String sql = "select * from usuario where usuario = ?";
+      try {
+           PreparedStatement stm = con.prepareStatement(sql);
+           stm.setString(1, pUser);
+           ResultSet rs = stm.executeQuery();
+           return rs.next();            
+           
+       } catch (SQLException ex) {
+           System.out.println("Erro: " + ex.getMessage());
+       }
+      return true;
+    }  
     
     public boolean salvar(){
        String sql = "insert into usuario(nome,cpf,datanascimento,fone,email,senha)";
