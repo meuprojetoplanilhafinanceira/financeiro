@@ -8,7 +8,10 @@ package Modelos;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import utils.Conexao;
 
 /**
@@ -18,17 +21,18 @@ import utils.Conexao;
 public class Categoria {
     private int id;
     private String descricao;
-    private boolean tipo;
-    
+    private String tipo;
+   
     public boolean salvar(){
-    String sql = "insert into despesa(descricao, tipo)";
+    String sql = "insert into categoria(descricao, tipo)";
                   sql += "values(?,?)";
         Connection con = Conexao.conectar();
        
         try {
            PreparedStatement stm = con.prepareStatement(sql);
            stm.setString(1, this.descricao);
-           stm.setBoolean(2, this.tipo);
+           stm.setString(2, this.tipo);
+           
            
            stm.execute();           
         } catch (SQLException ex) {
@@ -47,7 +51,7 @@ public class Categoria {
         try {
            PreparedStatement stm = con.prepareStatement(sql);
            stm.setString(1, this.descricao);
-           stm.setBoolean(2, this.tipo);
+           stm.setString(2, this.tipo);
            stm.setInt(3, this.id);
            
            stm.execute();           
@@ -56,7 +60,66 @@ public class Categoria {
            return false;
         }        
         return true;
-   } 
+    }
+    
+    public Categoria consultar(int id){
+        Connection con = Conexao.conectar();
+        String sql = "select id, descricao, tipo"
+                 + " from categoria where id = ?";
+        Categoria categoria = null;
+        try {
+            PreparedStatement stm = con.prepareStatement(sql);
+            stm.setInt(1, id);
+            ResultSet rs = stm.executeQuery();
+            if(rs.next()){
+             categoria = new Categoria();
+             categoria.setId(id);
+             categoria.setDescricao(rs.getString("descricao"));
+             categoria.setTipo(rs.getString("tipo"));           
+            }
+           
+        } catch (SQLException ex) {
+           System.out.println("Erro: " + ex.getMessage());
+        }      
+    return categoria;  
+    }  
+    
+    public List<Categoria> consultar(){
+        List<Categoria> lista = new ArrayList<>();
+        Connection con = Conexao.conectar();
+        String sql = "select id, descricao, tipo";
+        try {
+           PreparedStatement stm = con.prepareStatement(sql);
+           ResultSet rs = stm.executeQuery();
+           while(rs.next()){
+            Categoria categoria = new Categoria();
+            categoria.setId(id);
+            categoria.setDescricao(rs.getString("descricao"));
+            categoria.setTipo(rs.getString("tipo"));
+            
+            lista.add(categoria);
+           }
+           
+        } catch (SQLException ex) {
+           System.out.println("Erro: " + ex.getMessage());
+        }      
+        return lista; 
+    }
+    
+    public boolean excluir(){
+        Connection con = Conexao.conectar();
+        String sql = "delete from categoria ";
+              sql +=" where id = ?";
+        try {
+           PreparedStatement stm = con.prepareStatement(sql);
+           stm.setInt(1, this.id);
+           stm.execute();           
+        } catch (SQLException ex) {
+           System.out.println("Erro: " + ex.getMessage());
+           return false;
+        }        
+        return true;
+    }
 
     public int getId() {
         return id;
@@ -74,12 +137,13 @@ public class Categoria {
         this.descricao = descricao;
     }
 
-    public boolean isTipo() {
+    public String getTipo() {
         return tipo;
     }
 
-    public void setTipo(boolean tipo) {
+    public void setTipo(String tipo) {
         this.tipo = tipo;
     }
+
     
 }

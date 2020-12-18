@@ -4,6 +4,8 @@
     Author     : User
 --%>
 
+<%@page import="java.util.List"%>
+<%@page import="Modelos.Categoria"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -13,10 +15,17 @@
     </head>
     <body>
         <h1>Cadastro de Despesa</h1>
+        <%
+            Categoria categoria = new Categoria();
+            List<Categoria> categorias = categoria.consultar();
+        %>
+        
          <div>
             <form action="recebeDadosDespesa.jsp" method="POST">
             <label>Informe a categoria</label>
-            <input type="text" name="categoria" /> 
+            <select name="tipo"><% for(Categoria c: categorias){ %>
+                    <option value="<%out.write(""+c.getDescricao());%>"></option>    
+            </select> 
             
             <br />
             <label>Informe a descrição</label>
