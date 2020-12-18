@@ -17,14 +17,15 @@
         <h1>Cadastro de Despesa</h1>
         <%
             Categoria categoria = new Categoria();
-            List<Categoria> categorias = categoria.consultar();
+            List<Categoria> categorias = categoria.consultar("D");
         %>
         
          <div>
             <form action="recebeDadosDespesa.jsp" method="POST">
             <label>Informe a categoria</label>
-            <select name="tipo"><% for(Categoria c: categorias){ %>
-                    <option value="<%out.write(""+c.getDescricao());%>"></option>    
+            <select name="iddespesa"><% for(Categoria c: categorias){ %>
+                    <option value="<%out.write(c.getId());%>"> <%out.write(c.getDescricao());%> </option>
+                    <%}%>
             </select> 
             
             <br />

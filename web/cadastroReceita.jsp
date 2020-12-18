@@ -4,6 +4,8 @@
     Author     : User
 --%>
 
+<%@page import="java.util.List"%>
+<%@page import="Modelos.Categoria"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -13,11 +15,17 @@
     </head>
     <body>
         <h1>Cadastro Receita</h1>
+         <%
+            Categoria categoria = new Categoria();
+            List<Categoria> categorias = categoria.consultar("R");
+        %>
         <div>
             <form action="recebeDadosReceita.jsp" method="POST">
             <label>Informe a categoria</label>
-            <input type="text" name="categoria" /> 
-            
+            <select name="idreceita"><% for(Categoria c: categorias){ %>
+                    <option value="<%out.write(c.getId());%>"> <%out.write(c.getDescricao());%> </option>
+                    <%}%>
+            </select> 
             <br />
             <label>Informe a descrição</label>
             <input type="text" name="descricao" /> 

@@ -23,7 +23,7 @@
           Categoria categoria = new Categoria();
           categoria.setDescricao(descricao);
           //categoria.setTipo(Boolean.getBoolean(tipo));
-          categoria.setClasse(tipo);
+          categoria.setTipo(tipo);
          
           if(categoria.salvar()){
               out.write("Categoria salva com sucesso");

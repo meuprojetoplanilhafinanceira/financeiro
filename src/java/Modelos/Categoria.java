@@ -84,12 +84,13 @@ public class Categoria {
     return categoria;  
     }  
     
-    public List<Categoria> consultar(){
+    public List<Categoria> consultar(String tipo){
         List<Categoria> lista = new ArrayList<>();
         Connection con = Conexao.conectar();
-        String sql = "select id, descricao, tipo";
+        String sql = "select id, descricao, tipo from categoria where tipo = ?";
         try {
            PreparedStatement stm = con.prepareStatement(sql);
+           stm.setString(1, tipo);
            ResultSet rs = stm.executeQuery();
            while(rs.next()){
             Categoria categoria = new Categoria();
